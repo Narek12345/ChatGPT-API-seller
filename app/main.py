@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi import UploadFile
 
-from gpt_index import SimpleDirectoryReader, GPTListIndex, readers, GPTSimpleVectorIndex, LLMPredictor, PromptHelper
+from llama_index import SimpleDirectoryReader, GPTListIndex, readers, LLMPredictor, PromptHelper
 from langchain import OpenAI
 
 import os
@@ -12,7 +12,7 @@ app = FastAPI()
 
 
 @app.post('/transfer_data_for_training')
-async def transfer_data_for_training(file: UploadFile)
+async def transfer_data_for_training(file: UploadFile):
 	"""We accept the .txt file, which we then send to ChatGPT for trainig."""
 
 	max_input_size = 4096
