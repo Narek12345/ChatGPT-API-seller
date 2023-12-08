@@ -22,7 +22,7 @@ app = FastAPI()
 def transfer_data_for_training(file: UploadFile):
 	"""We accept the .txt file, which we then send to ChatGPT for trainig."""
 	text = file.file.read().decode('windows-1251')
-	optimized_text = text.encode('utf-8').decode()
+	optimized_text = text.encode('utf-8').decode().replace('\n', ' ').replace('\r', '')
 
 	documents = Document(text=optimized_text)
 	# index = GPTVectorStoreIndex.from_documents(documents)
