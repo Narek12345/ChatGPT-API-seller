@@ -10,7 +10,7 @@ def transfer_data_for_training_request():
 
 
 def make_request_in_chatgpt():
-	text = 'расскажите о ваших услугам  на ремонт бытовой техники и приведите примеры лидов в этой нише'
+	text = 'расскажи про компанию и приведи мне примеры. Какой бюджет компании'
 	url = 'http://127.0.0.1:8000/make_request_in_chatgpt/?text=' + text
 	resp = requests.post(url=url)
 
@@ -19,5 +19,5 @@ def make_request_in_chatgpt():
 	print(data['response'])
 	
 
-transfer_data_for_training_request()
-# make_request_in_chatgpt()
+# transfer_data_for_training_request()
+make_request_in_chatgpt()

@@ -16,7 +16,7 @@ from typing import Annotated
 
 import os
 
-os.environ['OPENAI_API_KEY'] = "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"
+os.environ['OPENAI_API_KEY'] = "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"
 
 app = FastAPI()
 
@@ -36,10 +36,6 @@ def transfer_data_for_training(file: UploadFile = File(...)):
 		os.remove(file.filename)
 
 	text = contents.decode()
-
-	# # Получаем текст из переданного файла.
-	# text = file.file.read().decode('windows-1251')
-	# optimized_text = text.encode('utf-8').decode().replace('\n', ' ').replace('\r', '')
 
 	llm_predictor = LLMPredictor(llm=OpenAI(temperature=0.5, model_name='text-davinci-003', max_tokens=300))
 	prompt_helper = PromptHelper(4096, 300, 0.2, chunk_size_limit=600)
