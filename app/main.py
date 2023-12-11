@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from fastapi import UploadFile
+from fastapi import UploadFile, File
 
 from llama_index import (
 	Document,
@@ -12,25 +12,39 @@ from llama_index import (
 
 from langchain.llms import OpenAI
 
+from typing import Annotated
+
 import os
 
-os.environ['OPENAI_API_KEY'] = "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"
+os.environ['OPENAI_API_KEY'] = "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"
 
 app = FastAPI()
 
 
 @app.post('/transfer_data_for_training')
-def transfer_data_for_training(file: UploadFile):
+def transfer_data_for_training(file: UploadFile = File(...)):
 	"""We accept the .txt file, which we then send to ChatGPT for trainig."""
-	global index
 
-	text = file.file.read().decode('windows-1251')
-	optimized_text = text.encode('utf-8').decode().replace('\n', ' ').replace('\r', '')
+	try:
+		contents = file.file.read()
+		with open(file.filename, 'wb') as f:
+			f.write(contents)
+	except Exception:
+		return {"message": "There was an error uploading the file"}
+	finally:
+		file.file.close()
+		os.remove(file.filename)
+
+	text = contents.decode()
+
+	# # Получаем текст из переданного файла.
+	# text = file.file.read().decode('windows-1251')
+	# optimized_text = text.encode('utf-8').decode().replace('\n', ' ').replace('\r', '')
 
 	llm_predictor = LLMPredictor(llm=OpenAI(temperature=0.5, model_name='text-davinci-003', max_tokens=300))
 	prompt_helper = PromptHelper(4096, 300, 0.2, chunk_size_limit=600)
 
-	documents = [Document(text=optimized_text)]
+	documents = [Document(text=text)]
 
 	index = GPTVectorStoreIndex.from_documents(documents, llm_predictor=llm_predictor, prompt_helper=prompt_helper)
 
