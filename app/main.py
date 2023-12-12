@@ -16,7 +16,7 @@ from typing import Annotated
 
 import os
 
-os.environ['OPENAI_API_KEY'] = "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"
+OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY')
 
 app = FastAPI()
 
