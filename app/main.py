@@ -10,7 +10,7 @@ from llama_index import (
 	load_index_from_storage,
 )
 
-from openai import OpenAI
+from langchain.llms import OpenAI
 
 from typing import Annotated
 
