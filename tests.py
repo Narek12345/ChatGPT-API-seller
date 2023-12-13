@@ -1,18 +1,18 @@
 import requests, json
 
-URL = 'https://chatgpt-seller.onrender.com'
+URL = 'http://127.0.0.1:8000'
 
 
 def transfer_data_for_training_request():
 	url = URL + '/transfer_data_for_training/'
-	file = {'file': open(r'C:\Users\Нарек\Desktop\DB for GPT.txt', encoding="utf-8")}
+	file = {'file': open(r'C:\Users\Нарек\Desktop\DataBase.txt', encoding="utf-8")}
 	resp = requests.post(url=url, files=file)
 
 	print(resp)
 
 
 def make_request_in_chatgpt():
-	text = 'когда работаете'
+	text = 'кто является моей женной'
 	url = URL + '/make_request_in_chatgpt/?text=' + text
 	resp = requests.post(url=url)
 
@@ -21,5 +21,5 @@ def make_request_in_chatgpt():
 	print(data['response'])
 
 
-transfer_data_for_training_request()
-# make_request_in_chatgpt()
+# transfer_data_for_training_request()
+make_request_in_chatgpt()

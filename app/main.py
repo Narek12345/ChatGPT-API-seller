@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from fastapi import UploadFile, File
+from fastapi import UploadFile
 
 from llama_index import (
 	Document,
@@ -16,13 +16,14 @@ from typing import Annotated
 
 import os
 
-OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY')
+# OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY')
+os.environ['OPENAI_API_KEY'] = "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"
 
 app = FastAPI()
 
 
 @app.post('/transfer_data_for_training')
-def transfer_data_for_training(file: UploadFile = File(...)):
+def transfer_data_for_training(file: UploadFile):
 	"""We accept the .txt file, which we then send to ChatGPT for trainig."""
 
 	try:
